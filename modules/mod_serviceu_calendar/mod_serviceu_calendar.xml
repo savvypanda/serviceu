@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<install type="module" version="1.5.0" method="upgrade">
+	<name>ServiceU Calendar Filter</name>
+	<author>Cory Webb Media</author>
+	<creationDate>March 2012</creationDate>
+	<copyright>Copyright (C) 2012</copyright>
+	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+	<authorEmail>joe@corywebbmedia.com</authorEmail>
+	<authorUrl>corywebbmedia.com</authorUrl>
+	<version>1.5.0</version>
+	<description>This module shows a calendar that can be used to filter the results of events from the ServiceU API</description>
+	<files>
+		<filename module="mod_serviceu_calendar">mod_serviceu_calendar.php</filename>
+		<filename>index.html</filename>
+		<filename>helper.php</filename>
+		<filename>month_days.php</filename>
+		<folder>tmpl</folder>
+	</files>
+	<params />
+</install>

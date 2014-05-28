@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <config>
-	<params>
-		<param name="event_list_limit" type="text" default="15" label="Event List Limit" description="The number of events to list in the frontend" />
-		<param name="org_key" type="text" default="" label="ServiceU OrgKey" description="OrgKey supplied by ServiceU for accessing organization-specific events" size="60" />
-		<param name="sync_days" type="text" default="365" label="Days to Sync" description="The number of days to keep events synced for (default 365)" />
-		<param name="error_tolerance" type="text" default="5" label="Error Tolerance" description="The number of errors to allow before aborting the update" />
-		<param name="debugging" type="list" default="0" label="Debug" description="Turn on to log detailed information from the sync">
+	<fieldset name="basic" label="Basic" description="">
+		<field name="event_list_limit" type="text" default="15" label="Event List Limit" description="The number of events to list in the frontend" />
+		<field name="org_key" type="text" default="" label="ServiceU OrgKey" description="OrgKey supplied by ServiceU for accessing organization-specific events" size="60" />
+		<field name="sync_days" type="text" default="365" label="Days to Sync" description="The number of days to keep events synced for (default 365)" />
+		<field name="error_tolerance" type="text" default="5" label="Error Tolerance" description="The number of errors to allow before aborting the update" />
+		<field name="debugging" type="list" default="0" label="Debug" description="Turn on to log detailed information from the sync">
 			<option value="0">Off</option>
 			<option value="1">On</option>
-		</param>
-	</params>
+		</field>
+	</fieldset>
 </config>

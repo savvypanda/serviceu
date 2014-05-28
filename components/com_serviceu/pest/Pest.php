@@ -1,5 +1,4 @@
-<?php // -*- c-basic-offset: 2 -*-
-defined( '_JEXEC' ) or die;
+<?php defined('_JEXEC') or die('Restricted Access');
 
 /**
  * Pest is a REST client for PHP.

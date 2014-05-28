@@ -1,8 +1,6 @@
-<?php
-defined( '_JEXEC' ) or die( 'Restricted access' );
+<?php defined( '_JEXEC' ) or die( 'Restricted access' );
 
-class TableServiceu_events extends JTable
-{
+class TableServiceu_events extends JTable {
 	public $events_id = null;
 	public $CategoryList = null;
 	public $ContactEmail = null;
@@ -36,8 +34,7 @@ class TableServiceu_events extends JTable
 	public $SubmittedBy = null;
 	public $last_sync_occurred = null;
 
-	function __construct(&$db)
-	{
+	function __construct(&$db) {
 		parent::__construct('#__serviceu_events', 'events_id', $db);
 	}
 }

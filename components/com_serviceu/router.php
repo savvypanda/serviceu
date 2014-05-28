@@ -1,8 +1,6 @@
-<?php
-defined( '_JEXEC' ) or die;
+<?php defined( '_JEXEC' ) or die;
 
-function ServiceuBuildRoute(&$query)
-{
+function ServiceuBuildRoute(&$query) {
 	if (!isset($query['Itemid'])) {
 		$item = JSite::getMenu()->getActive();
 
@@ -12,7 +10,6 @@ function ServiceuBuildRoute(&$query)
 	return array();
 }
 
-function ServiceuParseRoute($segments)
-{
+function ServiceuParseRoute($segments) {
 	return array();
 }

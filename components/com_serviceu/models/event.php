@@ -1,28 +1,21 @@
-<?php
-defined( '_JEXEC' ) or die( 'Restricted access' );
+<?php defined( '_JEXEC' ) or die( 'Restricted access' );
 
 require_once JPATH_BASE . '/components/com_serviceu/models/eventlist.php';
-
 jimport('joomla.application.component.model');
 
-class ServiceuModelEvent extends JModel
-{
+class ServiceuModelEvent extends JModelLegacy {
 	private $event;
 
-	function getEvent()
-	{
-		if (!isset($this->event))
-		{
-			$id = JRequest::getInt('id', 0);
+	function getEvent() {
+		if (!isset($this->event)) {
+			$id = JFactory::getApplication()->input->get('id', 0,'int');
 
 			$query = "SELECT e.*, d.TicketingDescription "
 					."FROM #__serviceu_events AS e "
 					."LEFT JOIN #__serviceu_event_details AS d USING(OccurrenceId) "
 					."WHERE events_id = '{$id}'";
-
 			$db = JFactory::getDBO();
 			$db->setQuery($query);
-
 			$row = $db->loadObject();
 
 			$time = strtotime($row->OccurrenceStartTime);
@@ -31,7 +24,6 @@ class ServiceuModelEvent extends JModel
 			$row->end_time = date('g:i A', strtotime($row->OccurrenceEndTime));
 
 			$categories = explode(' | ', $row->CategoryList);
-
 			if (in_array(ServiceuModelEventlist::getAccessibleCategory(), $categories)) {
 				$row->accessible = true;
 			} else {
@@ -43,5 +35,4 @@ class ServiceuModelEvent extends JModel
 
 		return $this->event;
 	}
-
 }

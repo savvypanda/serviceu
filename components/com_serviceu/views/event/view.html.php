@@ -1,14 +1,11 @@
-<?php
-defined( '_JEXEC' ) or die( 'Restricted access' );
+<?php defined('_JEXEC') or die( 'Restricted access' );
 
 jimport( 'joomla.application.component.view' );
 
-class ServiceuViewEvent extends JView
-{
+class ServiceuViewEvent extends JViewLegacy {
 	protected $row;
 
-	function display($tpl = null)
-	{
+	function display($tpl = null) {
 		$row = $this->get('Event');
 		$this->assign('row', $row);
 		$this->assign('city_state_zip', $row->LocationCity . ', ' . $row->LocationState . ' ' . $row->LocationZip);

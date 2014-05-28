@@ -2,7 +2,7 @@
 
 jimport('joomla.application.component.model');
 
-class ServiceuModelScrapeevents extends JModel {
+class ServiceuModelScrapeevents extends JModelLegacy {
 	private $existing_events;
 	private $event_categories;
 	private $serviceu_config = array('orgKey' => '', 'format' => 'json');
@@ -30,7 +30,7 @@ class ServiceuModelScrapeevents extends JModel {
 		$this->_seedCategories();
 		$this->_seedEventOccurrences();
 		$this->_getMemoryLimit();
-		$this->debugging = (JRequest::getString('loglevel')=='extrainfo');
+		$this->debugging = (JFactory::getApplication()->input->get('loglevel', null, 'string') == 'extrainfo');
 
 		$params = JFactory::getApplication()->getParams();
 		$this->serviceu_config['orgKey'] = $params->get('org_key');
@@ -411,7 +411,6 @@ class ServiceuModelScrapeevents extends JModel {
 
 	protected function _markLastUpdated() {
 		$query = "INSERT INTO #__serviceu_events_last_updated (`timestamp`) VALUES ('" . time() . "')";
-
 		$db = JFactory::getDBO();
 		$db->setQuery($query);
 		$db->query();

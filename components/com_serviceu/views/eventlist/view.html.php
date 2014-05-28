@@ -1,19 +1,16 @@
-<?php
-defined( '_JEXEC' ) or die( 'Restricted access' );
+<?php defined('_JEXEC') or die('Restricted access');
 
 jimport( 'joomla.application.component.view' );
 
-class ServiceuViewEventlist extends JView
-{
-	function display($tpl = null)
-	{
+class ServiceuViewEventlist extends JViewLegacy {
+	function display($tpl = null) {
 		$events = $this->get('events');
 		$pagination = $this->get('pagination');
 		$accessible = $this->get('accessibleCategory');
 
-		$this->assign('events', $events);
-		$this->assign('pagination', $pagination);
-		$this->assign('accessible', $accessible);
+		$this->events = $events;
+		$this->pagination = $pagination;
+		$this->accessible = $accessible;
 
 		parent::display($tpl);
 	}

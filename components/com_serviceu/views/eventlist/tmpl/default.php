@@ -1,4 +1,4 @@
-<?php defined( '_JEXEC' ) or die( 'Restricted access' ); ?>
+<?php defined('_JEXEC') or die('Restricted access'); ?>
 <link rel="stylesheet" href="<?php echo JURI::base() ?>media/com_serviceu/colorbox/colorbox.css" type="text/css" media="screen" charset="utf-8" />
 <script type="text/javascript" charset="utf-8" src="<?php echo JURI::base() ?>media/com_serviceu/colorbox/jquery.colorbox-min.js"></script>
 <script type="text/javascript" charset="utf-8">

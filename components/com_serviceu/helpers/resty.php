@@ -1,12 +1,10 @@
-<?php
-defined( '_JEXEC' ) or die;
+<?php defined( '_JEXEC' ) or die;
 
 /**
  * A simple PHP library for doing RESTful HTTP stuff. Does *not* require the curl extension.
  * @link https://github.com/fictivekin/resty.php
  */
-class Resty
-{
+class Resty {
 
 	/**
 	 * The version of this lib
@@ -148,7 +146,7 @@ class Resty
 	/**
 	 * make a GET request
 	 *
-	 * @param string the URL. This will be appended to the base_url, if any set
+	 * @param string $url the URL. This will be appended to the base_url, if any set
 	 * @param array $querydata hash of key/val pairs
 	 * @param array $headers hash of key/val pairs
 	 * @param array $options hash of key/val pairs ('timeout')
@@ -162,7 +160,7 @@ class Resty
 	/**
 	 * make a POST request
 	 *
-	 * @param string the URL. This will be appended to the base_url, if any set
+	 * @param string $url the URL. This will be appended to the base_url, if any set
 	 * @param array $querydata hash of key/val pairs
 	 * @param array $headers hash of key/val pairs
 	 * @param array $options hash of key/val pairs ('timeout')
@@ -176,7 +174,7 @@ class Resty
 	/**
 	 * make a PUT request
 	 *
-	 * @param string the URL. This will be appended to the base_url, if any set
+	 * @param string $url the URL. This will be appended to the base_url, if any set
 	 * @param array $querydata hash of key/val pairs
 	 * @param array $headers hash of key/val pairs
 	 * @param array $options hash of key/val pairs ('timeout')
@@ -190,7 +188,7 @@ class Resty
 	/**
 	 * make a DELETE request
 	 *
-	 * @param string the URL. This will be appended to the base_url, if any set
+	 * @param string $url the URL. This will be appended to the base_url, if any set
 	 * @param array $querydata hash of key/val pairs
 	 * @param array $headers hash of key/val pairs
 	 * @param array $options hash of key/val pairs ('timeout')
@@ -350,6 +348,8 @@ class Resty
 		// If anyone is still using mime_content_type()
 		} elseif (function_exists('mime_content_type')) {
 			$type = trim(mime_content_type($filepath));
+		} else {
+			$type = false;
 		}
 
 		if ($type !== false && strlen($type) > 0) { return $type; }
@@ -483,8 +483,8 @@ class Resty
 	/**
 	 * takes a set of key/val pairs and builds an array of raw header strings
 	 *
-	 * @param string $headers
-	 * @return void
+	 * @param array $headers
+	 * @return array
 	 * @author Ed Finkler
 	 */
 	protected function buildHeadersArray($headers) {

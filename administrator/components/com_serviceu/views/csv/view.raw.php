@@ -1,12 +1,9 @@
-<?php
-defined( '_JEXEC' ) or die;
+<?php defined( '_JEXEC' ) or die;
 
 jimport( 'joomla.application.component.view');
 
-class ServiceuViewCsv extends JView
-{
-	public function display($tpl = null)
-	{
+class ServiceuViewCsv extends JViewLegacy {
+	public function display($tpl = null) {
 		$data = $this->get('Data');
 
 		$document = JFactory::getDocument();
@@ -33,7 +30,6 @@ class ServiceuViewCsv extends JView
 		);
 
 		$fp = fopen('php://output', 'w');
-
 		fputcsv($fp, $headers);
 
 		foreach ($data as $row) {

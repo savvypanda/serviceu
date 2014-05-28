@@ -1,8 +1,6 @@
-<?php
-defined( '_JEXEC' ) or die;
+<?php defined( '_JEXEC' ) or die;
 
-class TableServiceu_event_details extends JTable
-{
+class TableServiceu_event_details extends JTable {
 	public $event_details_id = null;
 	public $ContactEmail = null;
 	public $ContactId = null;
@@ -35,8 +33,7 @@ class TableServiceu_event_details extends JTable
 	public $RegistrationUrl = null;
 	public $ResourceList = null;
 
-	public function __construct(&$db)
-	{
+	public function __construct(&$db) {
 		parent::__construct('#__serviceu_event_details', 'event_details_id', $db);
 	}
 }

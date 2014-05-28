@@ -1,14 +1,10 @@
-<?php
-defined( '_JEXEC' ) or die;
+<?php defined( '_JEXEC' ) or die;
 
 jimport( 'joomla.application.component.view');
 
-class ServiceuViewLog extends JView
-{
-	public function display($tpl = null)
-	{
+class ServiceuViewLog extends JViewLegacy {
+	public function display($tpl = null) {
 		JToolBarHelper::title('ServiceU Events Error Log');
-
 		parent::display($tpl);
 	}
 }

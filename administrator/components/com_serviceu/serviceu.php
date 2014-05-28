@@ -1,16 +1,14 @@
-<?php
-defined( '_JEXEC' ) or die;
+<?php defined( '_JEXEC' ) or die;
 
 jimport('joomla.application.component.controller');
 
-class ServiceuController extends JController
-{
-	public function display()
-	{
-		$view = JRequest::getCmd('view', '');
+class ServiceuController extends JControllerLegacy {
+	public function display() {
+		$input = JFactory::getApplication()->input;
+		$view = $input->get('view', '');
 
 		if ($view == '') {
-			JRequest::setVar('view', 'panel');
+			$input->set('view', 'panel');
 		}
 
 		parent::display();
@@ -18,5 +16,5 @@ class ServiceuController extends JController
 }
 
 $controller = new ServiceuController();
-$controller->execute(JRequest::getCmd('task'));
+$controller->execute(JFactory::getApplication()->input->get('task'));
 $controller->redirect();

@@ -1,5 +1,4 @@
-<?php
-defined( '_JEXEC' ) or die;
+<?php defined('_JEXEC') or die('Restricted Access');
 
 require_once 'Pest.php';
 
@@ -24,8 +23,7 @@ require_once 'Pest.php';
  * This code is licensed for use, modification, and distribution
  * under the terms of the MIT License (see http://en.wikipedia.org/wiki/MIT_License)
  */
-class PestJSON extends Pest
-{
+class PestJSON extends Pest {
   public function post($url, $data, $headers=array()) {
     return parent::post($url, json_encode($data), $headers);
   }

@@ -1,53 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE install SYSTEM "http://dev.joomla.org/xml/1.5/component-install.dtd">
-<install type="component" version="1.5.0" method="upgrade">
-	<name>serviceu</name>
-	<creationDate>03/26/12</creationDate>
-	<author>Cory Webb Media</author>
-	<authorEmail>joe@corywebbmedia.com</authorEmail>
-	<copyright>© 2012</copyright>
-	<license>GPLv2</license>
-	<version>1.0</version>
+<extension type="component" version="3.3.0" method="upgrade">
+	<name>ServiceU</name>
+	<creationDate>May 2014</creationDate>
+	<author>Savvy Panda</author>
+	<authorEmail>support@savvypanda.com</authorEmail>
+	<copyright>2014</copyright>
+	<license>GPLv3</license>
+	<version>1.1</version>
 	<description></description>
-	<menu link="option=com_serviceu">serviceu</menu>
+
+	<install>
+		<sql>
+			<file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
+		</sql>
+	</install>
+	<uninstall>
+		<sql>
+			<file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql</file>
+		</sql>
+	</uninstall>
+
 	<files folder="components/com_serviceu">
+		<folder>helpers</folder>
 		<folder>models</folder>
-		<filename>serviceu.php</filename>
-		<filename>index.html</filename>
-		<folder>views</folder>
 		<folder>pest</folder>
+		<folder>views</folder>
+		<filename>index.html</filename>
+		<filename>router.php</filename>
+		<filename>serviceu.php</filename>
 	</files>
 	<media destination="com_serviceu" folder="media/com_serviceu">
 		<folder>colorbox</folder>
 		<filename>index.html</filename>
 	</media>
-	<install>
-		<sql>
-			<file charset="utf8" driver="mysql">install.mysql.sql</file>
-		</sql>
-	</install>
-	<uninstall>
-		<sql>
-			<file charset="utf8" driver="mysql">uninstall.mysql.sql</file>
-		</sql>
-	</uninstall>
 	<administration>
 		<menu>ServiceU</menu>
 		<submenu>
-			<menu link="option=com_serviceu&amp;view=panel">Control Panel</menu>
-			<menu link="option=com_serviceu&amp;view=log">Error Log</menu>
-			<menu link="option=com_serviceu&amp;view=csv">CSV Export</menu>
+			<menu view="panel">Control Panel</menu>
+			<menu view="log">Error Log</menu>
+			<menu view="csv">CSV Export</menu>
 		</submenu>
 		<files folder="administrator/components/com_serviceu">
-			<filename>install.mysql.sql</filename>
-			<filename>uninstall.mysql.sql</filename>
-			<filename>config.xml</filename>
-			<filename>serviceu.php</filename>
-			<filename>index.html</filename>
+			<folder>models</folder>
+			<folder>sql</folder>
 			<folder>tables</folder>
 			<folder>views</folder>
-			<folder>models</folder>
+			<filename>config.xml</filename>
+			<filename>index.html</filename>
+			<filename>serviceu.php</filename>
 		</files>
 	</administration>
-</install>
-
+</extension>

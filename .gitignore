@@ -32,6 +32,8 @@
 !administrator/components/com_serviceu/*
 !administrator/components/com_serviceu/models/
 !administrator/components/com_serviceu/models/*
+!administrator/components/com_serviceu/sql/
+!administrator/components/com_serviceu/sql/*
 !administrator/components/com_serviceu/tables/
 !administrator/components/com_serviceu/tables/*
 !administrator/components/com_serviceu/views/

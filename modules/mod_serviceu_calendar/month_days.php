@@ -1,4 +1,4 @@
-<?php defined( '_JEXEC' ) or die; ?>
+<?php defined('_JEXEC') or die('Restricted Access'); ?>
 <div class="month-days">
 <?php foreach ($weeks as $week): ?>
 <div class="month-days-line">

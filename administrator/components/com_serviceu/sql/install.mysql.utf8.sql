@@ -73,7 +73,7 @@ CREATE TABLE IF NOT EXISTS `#__serviceu_event_details` (
 
 CREATE TABLE IF NOT EXISTS `#__serviceu_event_categories` (
   `category_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `category_name` VARCHAR(255) NOT NULL DEFAULT '',
+  `category_name` VARCHAR(255) NOT NULL DEFAULT '' COLLATE latin1_bin,
   PRIMARY KEY (`category_id`),
   UNIQUE KEY `category_name` (`category_name`)
 );

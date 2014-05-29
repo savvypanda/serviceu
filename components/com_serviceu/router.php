@@ -2,11 +2,9 @@
 
 function ServiceuBuildRoute(&$query) {
 	if (!isset($query['Itemid'])) {
-		$item = JSite::getMenu()->getActive();
-
-		$query['Itemid'] = $item->id;
+		$item = JFactory::getApplication()->getMenu()->getActive();
+		if($item) $query['Itemid'] = $item->id;
 	}
-
 	return array();
 }
 

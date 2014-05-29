@@ -1,8 +1,6 @@
-<?php
-defined( '_JEXEC' ) or die;
+<?php defined('_JEXEC') or die('Restricted Access');
 
-class ServiceuCalendarHelper
-{
+class ServiceuCalendarHelper {
 	public $month;
 	public $last_month;
 	public $year;
@@ -14,14 +12,12 @@ class ServiceuCalendarHelper
 	protected $last_month_days;
 	protected $start;
 
-	function __construct($month = null, $year = null)
-	{
+	function __construct($month = null, $year = null) {
 		if ($month) {
 			$this->month = $month;
 		} else {
 			$this->month = date('n');
 		}
-
 		$this->last_month = $this->month - 1;
 
 		if ($year) {
@@ -37,8 +33,7 @@ class ServiceuCalendarHelper
 		$this->last_month_days = date('t', $this->last_month_timestamp);
 	}
 
-	public function getWeeksArray()
-	{
+	public function getWeeksArray() {
 		static $weeks = array();
 
 		if (count($weeks)) {
@@ -95,8 +90,7 @@ class ServiceuCalendarHelper
 		return $weeks;
 	}
 
-	protected function _makeDate($month, $number, $class = 'noevents', $link = '')
-	{
+	protected function _makeDate($month, $number, $class = 'noevents', $link = '') {
 		$event_days = $this->getDaysWithEvents();
 
 		if ($class == 'noevents' && in_array($number, $event_days)) {
@@ -124,8 +118,7 @@ class ServiceuCalendarHelper
 		return $date;
 	}
 
-	public function getDaysWithEvents()
-	{
+	public function getDaysWithEvents() {
 		static $days = null;
 
 		if ($days != null) {
@@ -154,8 +147,7 @@ class ServiceuCalendarHelper
 		return array_unique($days);
 	}
 
-	public function getMonthDrop($selected)
-	{
+	public function getMonthDrop($selected) {
 		$months = array(
 			'1' => 'January',
 			'2' => 'February',
@@ -189,8 +181,7 @@ class ServiceuCalendarHelper
 		return $select;
 	}
 
-	public function renderMonthDays()
-	{
+	public function renderMonthDays() {
 		$weeks = $this->getWeeksArray();
 		require 'month_days.php';
 	}

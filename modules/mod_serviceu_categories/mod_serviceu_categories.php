@@ -1,5 +1,4 @@
-<?php
-defined( '_JEXEC' ) or die;
+<?php defined('_JEXEC') or die('Restricted Access');
 
 require_once JPATH_BASE . '/components/com_serviceu/models/eventlist.php';
 

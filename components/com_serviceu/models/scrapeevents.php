@@ -1,6 +1,7 @@
 <?php defined( '_JEXEC' ) or die('Restricted access');
 
 jimport('joomla.application.component.model');
+jimport('joomla.log.log');
 
 class ServiceuModelScrapeevents extends JModelLegacy {
 	private $existing_events;
@@ -9,7 +10,6 @@ class ServiceuModelScrapeevents extends JModelLegacy {
 	private $cur_memory_limit = 0;
 	private $debugging = false;
 	private $eventcounter = 0;
-	private $errorlog = null;
 	private $errorTolerance = 0;
 	private $errors = 0;
 
@@ -37,10 +37,14 @@ class ServiceuModelScrapeevents extends JModelLegacy {
 		$this->errorTolerance = $params->get('error_tolerance',5);
 		if(!$this->debugging && $params->get('debugging')==1) $this->debugging = true;
 
-		jimport('joomla.error.log');
-		$this->errorlog = JLog::getInstance('serviceu.php');
+		$log_path = JFactory::getConfig()->get('log_path').DIRECTORY_SEPARATOR;
+		$log_name = 'serviceu.php';
+		if(file_exists($log_path.$log_name)) {
+			unlink($log_path.$log_name);
+		}
+		JLog::addLogger(array('text_file'=>'serviceu.php'));
 
-		try {
+//		try {
 			$pest = new PestJSON('http://api.serviceu.com/rest/');
 			$dates = $this->_getDates();
 			$query_params = array_merge($dates, $this->serviceu_config);
@@ -90,17 +94,11 @@ class ServiceuModelScrapeevents extends JModelLegacy {
 				$this->_logNotification("Finished removing events. $events_removed events and $cats_removed categories were deleted.");
 				$this->_logNotification('Sync complete');
 			} else {
-				$this->errorlog->addEntry(array(
-					'comment' => 'No events returned by ServiceU API. Skipping update.',
-					'status' => 'Notification'
-				));
+				JLog::add('No events returned by ServiceU API. Skipping update.', JLog::NOTICE);
 			}
-		} catch (Exception $e) {
-			$this->errorlog->addEntry(array(
-				'comment' => $e->getMessage(),
-				'status' => get_class($e)
-			));
-		}
+//		} catch (Exception $e) {
+//			JLog::add($e->getMessage(), JLog::ERROR);
+//		}
 
 		$this->_markLastUpdated();
 	}
@@ -112,19 +110,19 @@ class ServiceuModelScrapeevents extends JModelLegacy {
 		if($event->event_details_id) {
 			$query = "DELETE FROM #__serviceu_event_details WHERE event_details_id=".$this->_db->quote($event->event_details_id);
 			$this->_db->setQuery($query);
-			$this->_db->query();
+			$this->_db->execute();
 		}
 		if($event->events_id) {
 			$query = "DELETE FROM #__serviceu_events WHERE events_id=".$this->_db->quote($event->events_id);
 			$this->_db->setQuery($query);
-			$this->_db->query();
+			$this->_db->execute();
 		}
 	}
 	private function _removeCat($cat) {
 		if($cat->category_id) {
 			$query = 'DELETE FROM #__serviceu_event_categories WHERE category_id='.$cat->category_id;
 			$this->_db->setQuery($query);
-			$this->_db->query();
+			$this->_db->execute();
 		}
 	}
 
@@ -138,10 +136,10 @@ class ServiceuModelScrapeevents extends JModelLegacy {
 	protected function _clearCategories() {
 		$query = "TRUNCATE TABLE #__serviceu_event_assigned_categories";
 		$this->_db->setQuery($query);
-		$this->_db->query();
+		$this->_db->execute();
 		$query = "TRUNCATE TABLE #__serviceu_event_categories";
 		$this->_db->setQuery($query);
-		$this->_db->query();
+		$this->_db->execute();
 
 		$this->event_categories = array();
 	}
@@ -264,6 +262,7 @@ class ServiceuModelScrapeevents extends JModelLegacy {
 				$category_id = $this->event_categories[$category]->category_id;
 			} else {
 				$category_id = $this->_addCategory($category);
+				//$this->event_categories
 			}
 			if(!$category_id) return false;
 
@@ -280,18 +279,16 @@ class ServiceuModelScrapeevents extends JModelLegacy {
 	}
 
 	protected function _addEventToCategory($EventId, $category_id) {
-		$db = JFactory::getDBO();
 		$query = "INSERT INTO #__serviceu_event_assigned_categories (EventId, category_id)"
-				." VALUES ('" . $db->getEscaped($EventId) . "', '" . $db->getEscaped($category_id) . "')";
-		$db->setQuery($query);
-		$db->query();
+				 ." VALUES (" . $this->_db->quote($EventId) . ", " . $this->_db->quote($category_id) . ")";
+		$this->_db->setQuery($query);
+		$this->_db->execute();
 	}
 
 	protected function _removeEventFromCategory($EventId, $category_id) {
-		$db = JFactory::getDBO();
-		$query = 'DELETE #__serviceu_event_assigned_categories WHERE EventId = '.$db->getEscaped($EventId).' AND category_id = '.$db->getEscaped($category_id);
-		$db->setQuery($query);
-		$db->query();
+		$query = 'DELETE #__serviceu_event_assigned_categories WHERE EventId = '.$this->_db->quote($EventId).' AND category_id = '.$this->_db->quote($category_id);
+		$this->_db->setQuery($query);
+		$this->_db->execute();
 	}
 
 	/**
@@ -337,7 +334,7 @@ class ServiceuModelScrapeevents extends JModelLegacy {
 				." WHERE EventId = '{$EventId}'";
 
 		$this->_db->setQuery($query);
-		return $this->_db->loadResultArray();
+		return $this->_db->loadColumn();
 	}
 
 	protected function _formatServiceuDate($time_string) {
@@ -373,30 +370,21 @@ class ServiceuModelScrapeevents extends JModelLegacy {
 		return round($num/1048576,0).'M';
 	}
 
-	protected function _logError($message) {
+	protected function _logError($message, $logit = false) {
 		if($this->debugging) {
 			$message = 'Record #'.$this->eventcounter.': '.$message;
 		}
 		if($this->errors < $this->errorTolerance) {
 			$this->errors++;
-			$this->errorlog->addEntry(array(
-				'comment' => $message,
-				'status' => 'Error'
-			));
+			if($logit) JLog::add($message, JLog::ERROR);
 		} else {
-			$this->errorlog->addEntry(array(
-				'comment' => 'Error tolerance reached. Aborting.',
-				'status' => 'Error'
-			));
+			JLog::add('Error tolerance reached. Aborting.', JLog::NOTICE);
 			throw new Exception($message);
 		}
 	}
 	protected function _logNotification($message) {
 		if($this->debugging) {
-			$this->errorlog->addEntry(array(
-				'comment' => $message,
-				'status' => 'Notification'
-			));
+			JLog::add($message, JLog::INFO);
 		}
 	}
 
@@ -411,8 +399,7 @@ class ServiceuModelScrapeevents extends JModelLegacy {
 
 	protected function _markLastUpdated() {
 		$query = "INSERT INTO #__serviceu_events_last_updated (`timestamp`) VALUES ('" . time() . "')";
-		$db = JFactory::getDBO();
-		$db->setQuery($query);
-		$db->query();
+		$this->_db->setQuery($query);
+		$this->_db->execute();
 	}
 }

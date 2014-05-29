@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<install type="module" version="1.5.0" method="upgrade">
+<extension type="module" version="3.3.0" method="upgrade">
 	<name>ServiceU Calendar Categories</name>
-	<author>Cory Webb Media</author>
-	<creationDate>March 2012</creationDate>
-	<copyright>Copyright (C) 2012</copyright>
-	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
-	<authorEmail>joe@corywebbmedia.com</authorEmail>
-	<authorUrl>corywebbmedia.com</authorUrl>
-	<version>1.5.0</version>
+	<author>Savvy Panda</author>
+	<creationDate>May 2014</creationDate>
+	<copyright>Copyright (C) 2014</copyright>
+	<license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
+	<authorEmail>support@savvypanda.com</authorEmail>
+	<authorUrl>savvypanda.com</authorUrl>
+	<version>1.6.0</version>
 	<description>This module shows all of the event categories in the calendar.</description>
 	<files>
 		<filename module="mod_serviceu_categories">mod_serviceu_categories.php</filename>
 		<filename>index.html</filename>
 		<folder>tmpl</folder>
 	</files>
-	<params />
-</install>
+</extension>

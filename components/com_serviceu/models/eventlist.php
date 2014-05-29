@@ -24,7 +24,6 @@ class ServiceuModelEventlist extends JModelLegacy {
 	}
 
 	public function buildQuery() {
-		$db = JFactory::getDBO();
 		$values = $this->getSearchValues();
 
 		$query = "SELECT Name, OccurrenceStartTime, OccurrenceEndTime, DepartmentName, CategoryList, events_id, RegistrationEnabled, RegistrationUrl "
@@ -37,13 +36,13 @@ class ServiceuModelEventlist extends JModelLegacy {
 		if (count($values['departments'])) {
 			$sub_where = array();
 			foreach ($values['departments'] as $department) {
-				$sub_where[] = "e.DepartmentName = '" . $db->getEscaped($department) . "'";
+				$sub_where[] = "e.DepartmentName = ".$this->_db->quote($department);
 			}
 			$where[] = '(' . implode(' OR ', $sub_where) . ')';
 		}
 		if (strlen($values['event_search'])) {
-			$where[] = "(e.Description LIKE '%" . $db->getEscaped($values['event_search']) . "%' OR"
-				. " e.Name LIKE '%" . $db->getEscaped($values['event_search']) . "%')";
+			$where[] = "(e.Description LIKE '%" . $this->_db->escape($values['event_search']) . "%' OR"
+				. " e.Name LIKE '%" . $this->_db->escape($values['event_search']) . "%')";
 		}
 		if ($values['filter'] == 'month') {
 			$where[] = "(e.OccurrenceStartTime >= NOW() AND e.OccurrenceStartTime <= DATE_ADD(NOW(), INTERVAL 30 DAY))";
@@ -89,16 +88,16 @@ class ServiceuModelEventlist extends JModelLegacy {
 		return array('limit' => $limit, 'limitstart' => $limitstart);
 	}
 
-	public function getEventCategories() {
-		$db = JFactory::getDBO();
+	public static function getEventCategories() {
+		$db = JFactory::getDbo();
 		$db->setQuery("SELECT category_id, category_name FROM #__serviceu_event_categories ORDER BY category_name");
 		return $db->loadObjectList();
 	}
 
-	public function getDepartments() {
-		$db = JFactory::getDBO();
+	public static function getDepartments() {
+		$db = JFactory::getDbo();
 		$db->setQuery("SELECT DISTINCT DepartmentName FROM #__serviceu_events");
-		return $db->loadResultArray();
+		return $db->loadColumn();
 	}
 
 	protected function _postFilterDates() {
@@ -135,7 +134,7 @@ class ServiceuModelEventlist extends JModelLegacy {
 		}
 	}
 
-	public function getSearchValues() {
+	public static function getSearchValues() {
 		$input = JFactory::getApplication()->input;
 		$categories = $input->get('categories', array(), 'array');
 		$departments = $input->get('departments', array(), 'array');
@@ -187,7 +186,7 @@ class ServiceuModelEventlist extends JModelLegacy {
 	 * @return string
 	 * @author Joseph LeBlanc
 	 */
-	public function getAccessibleCategory() {
+	public static function getAccessibleCategory() {
 		return 'Accessible Program';
 	}
 }

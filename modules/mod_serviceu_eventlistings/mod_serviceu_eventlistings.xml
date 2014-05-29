@@ -1,21 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<install type="module" version="1.5.0" method="upgrade">
+<extension type="module" version="3.3.0" method="upgrade">
 	<name>ServiceU Event Listings</name>
-	<author>Cory Webb Media</author>
-	<creationDate>March 2012</creationDate>
-	<copyright>Copyright (C) 2012</copyright>
-	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
-	<authorEmail>joe@corywebbmedia.com</authorEmail>
-	<authorUrl>corywebbmedia.com</authorUrl>
-	<version>1.5.0</version>
+	<author>Savvy Panda</author>
+	<creationDate>May 2014</creationDate>
+	<copyright>Copyright (C) 2014</copyright>
+	<license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
+	<authorEmail>support@savvypanda.com</authorEmail>
+	<authorUrl>savvypanda.com</authorUrl>
+	<version>1.6.0</version>
 	<description>This module shows event listings from the ServiceU API. Can choose the latest events or specific ones to show.</description>
 	<files>
 		<filename module="mod_serviceu_eventlistings">mod_serviceu_eventlistings.php</filename>
 		<filename>index.html</filename>
 		<folder>tmpl</folder>
 	</files>
-	<params>
-		<param name="display_num" type="text" default="3" label="Display #" description="The number of events to display" size="2" />
-		<param name="display_events" type="text" default="" label="Display Events" description="Add the events_id for each event you want to display in a comma-separated list. If ids are entered here, the Display # limit is ignored." size="20" />
-	</params>
-</install>
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+				<field name="display_num" type="text" default="3" label="Display #" description="The number of events to display" size="2" />
+				<field name="display_events" type="text" default="" label="Display Events" description="Add the events_id for each event you want to display in a comma-separated list. If ids are entered here, the Display # limit is ignored." size="20" />
+			</fieldset>
+		</fields>
+	</config>
+</extension>
